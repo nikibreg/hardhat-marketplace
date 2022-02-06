@@ -7,7 +7,7 @@ import {
   nftMarketAddress, nftAddress
 } from '../config'
 
-import Market from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json'
+import NFTMarket from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 
 export default function MyAssets() {
@@ -25,7 +25,7 @@ export default function MyAssets() {
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
       
-    const marketContract = new ethers.Contract(nftMarketAddress, Market.abi, signer)
+    const marketContract = new ethers.Contract(nftMarketAddress, NFTMarket.abi, signer)
     const tokenContract = new ethers.Contract(nftAddress, NFT.abi, provider)
     const data = await marketContract.fetchMyNFTs()
     

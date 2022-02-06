@@ -8,7 +8,7 @@ import {
 } from '../config'
 
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
-import Market from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json'
+import NFTMarket from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json'
 
 let rpcEndpoint = null
 
@@ -25,7 +25,7 @@ export default function Home() {
   async function loadNFTs() {    
     const provider = new ethers.providers.JsonRpcProvider(rpcEndpoint)
     const tokenContract = new ethers.Contract(nftAddress, NFT.abi, provider)
-    const marketContract = new ethers.Contract(nftMarketAddress, Market.abi, provider)
+    const marketContract = new ethers.Contract(nftMarketAddress, NFTMarket.abi, provider)
     const data = await marketContract.fetchMarketItems()
     
     const items = await Promise.all(data.map(async i => {
@@ -51,7 +51,7 @@ export default function Home() {
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
-    const contract = new ethers.Contract(nftMarketAddress, Market.abi, signer)
+    const contract = new ethers.Contract(nftMarketAddress, NFTMarket.abi, signer)
 
     const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
     const transaction = await contract.createMarketSale(nftAddress, nft.itemId, {
